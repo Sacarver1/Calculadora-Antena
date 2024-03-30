@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calc Res.773</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Archivo de estilos CSS -->
+</head>
+<body>
+    <header id="main-header">
+        <a id="logo-header" href="#">
+            <img src="logo.png" alt="Logo Universidad"> <!-- Logo de la universidad -->
+        </a>
+        <h1>Calculadora limites de exposicion a campos electromagneticos</h1>
+        <div id="header-buttons">
+            <button onclick="limpiarLienzo()">Limpiar Lienzo</button>
+            <button onclick="nuevaSimulacion()">Nueva Simulación</button>
+            <button onclick="guardarDatos()">Guardar Datos</button>
+            <!-- Agrega más botones según sea necesario -->
+        </div>
+    </header>
+
+    <div id="main-content">
+        <div id="centro-container">
+            <div id="centro-texto">
+                <!-- Texto a mostrar en el centro -->
+                <h1>Bienvenido al Simulador de Antenas</h1>
+                <p>Haz clic en "Nueva Simulación" para comenzar.</p>
+            </div>
+            <button id="nueva-simulacion">Nueva Simulación</button>
+        </div>
+
+        <div id="simulaciones">
+            <!-- Aquí se agregarán dinámicamente las simulaciones -->
+        </div>
+
+        <div id="lienzo-container" class="grid-container">
+            <canvas id="grafico-ganancia" width="400" height="400"></canvas>
+
+        </div>  
+    </div>
+
+
+    <div id="dialogo" class="dialogo">
+        <h2>Ingrese los datos de la antena</h2>
+        <form id="formulario">
+            <!-- Campos para ingresar los datos -->
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required><br>
+
+            <label for="tipo-servicio">Tipo de Servicio:</label>
+            <select id="tipo-servicio" onchange="mostrarCampoOtro(this);" required>
+                <option value="radiodifusion-am">Radiodifusión AM</option>
+                <option value="radiodifusion-fm">Radiodifusión FM</option>
+                <option value="emisora-fm-comunitaria">Emisora FM Comunitaria</option>
+                <option value="television-analogica">Televisión Analógica</option>
+                <option value="television-digital">Televisión Digital</option>
+                <option value="otro">Otro</option>
+            </select><br>
+
+            <label for="otro-especificacion" id="label-otro" style="display:none;">Especifique:</label>
+            <input type="text" id="otro-especificacion" name="otro-especificacion" style="display:none;"><br>
+
+            <label for="patron-radiacion">Patrón de Radiación:</label>
+            <select id="patron-radiacion">
+                <option value="direccional">Direccional</option>
+                <option value="sectorial">Sectorial</option>
+                <option value="no-direccional">No Direccional</option>
+            </select><br>
+
+            <label for="altura">Altura:</label>
+            <input type="number" id="altura" required><br>
+
+            <!-- Nuevos campos para potencia, ganancia y frecuencia -->
+            <label for="potencia">Potencia (W):</label>
+            <input type="number" id="potencia" required><br>
+
+            <label for="ganancia">Ganancia (dB):</label>
+            <input type="number" id="ganancia" required><br>
+
+            <label for="frecuencia">Frecuencia (Hz):</label>
+            <input type="number" id="frecuencia" required><br>
+
+            <!-- Botones de aceptar y cancelar -->
+            <button type="submit">Aceptar</button>
+            <button type="button" onclick="ocultarDialogo()">Cancelar</button>
+        </form>
+    </div>
+
+
+
+    <script src="script.js"></script> <!-- Archivo de script JavaScript -->
+</body>
+</html>
