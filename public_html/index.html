@@ -34,9 +34,10 @@
             <!-- Aquí se agregarán dinámicamente las simulaciones -->
         </div>
 
-        <div id="lienzo-container">
-            <!-- Contenedor del lienzo para cada simulación -->
-        </div>
+        <div id="lienzo-container" class="grid-container">
+            <canvas id="grafico-ganancia" width="400" height="400"></canvas>
+
+        </div>  
     </div>
 
 
@@ -69,6 +70,16 @@
 
             <label for="altura">Altura:</label>
             <input type="number" id="altura" required><br>
+
+            <!-- Nuevos campos para potencia, ganancia y frecuencia -->
+            <label for="potencia">Potencia (W):</label>
+            <input type="number" id="potencia" required><br>
+
+            <label for="ganancia">Ganancia (dB):</label>
+            <input type="number" id="ganancia" required><br>
+
+            <label for="frecuencia">Frecuencia (Hz):</label>
+            <input type="number" id="frecuencia" required><br>
 
             <!-- Botones de aceptar y cancelar -->
             <button type="submit">Aceptar</button>
