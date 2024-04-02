@@ -6,8 +6,10 @@
     height: calc(100% - 80px); /* Ajusta la altura para que no se superponga con el encabezado */
     background-color: #f0f0f0;
     border-right: 1px solid #ccc;
+
 }
 .lienzo {
+align-items: flex-start; /* Alinea los elementos en la parte superior */
     position: fixed; /* Cambia de absolute a fixed */
     top: 125px; /* Ajusta la parte superior para evitar superposiciones */
     left: 170px;
@@ -35,9 +37,11 @@
     stroke-width: 1;
 }
 
-.lienzo {
+.lienzo {   
+    flex-direction: row;
     display: none; /* Ocultar todos los lienzos inicialmente */
     border: 1px solid #ccc;
+
 }
 .device {
     margin: 5px;
@@ -101,7 +105,7 @@ body {
     color: black;
     height: 100px; /* Aumenta la altura del encabezado */
     display: flex;
-    width: 100%;
+    width: 97.9%;
     top: 0px;
     right: 0px;
     align-items: center; /* Centra verticalmente los elementos */
@@ -187,3 +191,33 @@ nav ul li a:hover {
     margin: 0;
     color: #666;
 }
+
+.card-container {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    background-color: #fff;
+}
+
+.card-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card p {
+    margin: 0;
+    padding: 5px 0;
+}
+
