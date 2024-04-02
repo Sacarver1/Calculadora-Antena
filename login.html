@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c3333d0f26.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="form.css">
+    <title>Login</title>
+</head>
+<body>
+
+    <section>
+        <div class="contenedor">
+            <div class="formulario">
+                <form action="#">
+                    <h2>Iniciar Sesión</h2>
+
+                    <div class="input-contenedor">  
+                        <i class="fa-solid fa-envelope"></i> 
+                        <input type="email" required>
+                        <label for="#">Email</label>
+                    </div>    
+
+                    <div class="input-contenedor">   
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" required>
+                        <label for="#">Contraseña</label>
+                    </div>    
+
+                    <div class="olvidar">
+                        <label for="#">
+                            <input type="checkbox"> 
+                            <a href="#">olvidé la contraseña</a>
+                        </label>
+                    </div>
+
+                </form>
+
+                <div>
+                    <!-- Añade un ID al botón para identificarlo fácilmente -->
+                    <button id="loginButton">Acceder</button>
+                    <div class="registrar">
+                        <p>No tengo cuenta<a href="#"> Crear una</a></p>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script para redireccionar al hacer clic en el botón -->
+    <script>
+        // Obtener referencia al botón de acceso
+        const loginButton = document.getElementById('loginButton');
+
+        // Agregar un event listener al botón
+        loginButton.addEventListener('click', function() {
+            // Redirigir a la página principal
+            window.location.href = 'index.html';
+        });
+    </script>
+
+</body>
+</html>
