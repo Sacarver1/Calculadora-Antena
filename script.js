@@ -159,13 +159,13 @@ function mostrarSimulacion(simulacion) {
 function obtenerImagen(patronRadiacion) {
 
     if (patronRadiacion === "direccional") {
-        return "antena_direccional.png";
+        return "/img/antena_direccional.png";
     } else if (patronRadiacion === "sectorial") {
-        return "antena_sectorial.png";
+        return "/img/antena_sectorial.png";
     } else if (patronRadiacion === "no-direccional") {
-        return "antena_nodir.png";
+        return "/img/antena_nodir.png";
     } else {
-        return "antenna.png";
+        return "/img/antenna.png";
     }
 
 }
