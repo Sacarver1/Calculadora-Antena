@@ -193,7 +193,7 @@ nav ul li a:hover {
 }
 
 .card-container {
-    width: 100%;
+    width: 95%;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 10px;
@@ -213,11 +213,11 @@ nav ul li a:hover {
 }
 
 .card-body {
-    padding: 10px;
+    display: flex; /* Utilizar flexbox para alinear los elementos horizontalmente */
 }
 
-.card p {
-    margin: 0;
-    padding: 5px 0;
-}
+
+
+
+
 
