@@ -150,7 +150,7 @@ function mostrarSimulacion(simulacion) {
 
     imagen.style.right = "0"; // Posicionar a la derecha
     imagen.style.top = "0%"; // Centrar verticalmente
-    imagen.style.transform = "translateX(-20%)"; // Centrar verticalmente
+    imagen.style.transform = "translateX(-2000%)"; // Centrar verticalmente
 
     lienzo.appendChild(imagenContainer);
 }
