@@ -95,37 +95,42 @@ function mostrarSimulacion(simulacion) {
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
-    // Crear elementos <p> para cada atributo, excepto el nombre
-    let tipoServicioInfo = document.createElement("p");
-    tipoServicioInfo.textContent = "Tipo de Servicio: " + simulacion.tipoServicio;
+    // Crear una lista para cada atributo de la antena
+    let infoList = document.createElement("ul");
 
-    let alturaInfo = document.createElement("p");
-    alturaInfo.textContent = "Altura: " + simulacion.altura + "m";
+    // Agregar elementos <li> para cada atributo, excepto el nombre
+    let tipoServicioItem = document.createElement("li");
+    tipoServicioItem.textContent = "Tipo de Servicio: " + simulacion.tipoServicio;
 
-    let patronRadiacionInfo = document.createElement("p");
-    patronRadiacionInfo.textContent = "Patrón de Radiación: " + simulacion.patronRadiacion;
+    let alturaItem = document.createElement("li");
+    alturaItem.textContent = "Altura: " + simulacion.altura + "m";
 
-    let potenciaInfo = document.createElement("p");
-    potenciaInfo.textContent = "Potencia (W): " + simulacion.potencia;
+    let patronRadiacionItem = document.createElement("li");
+    patronRadiacionItem.textContent = "Patrón de Radiación: " + simulacion.patronRadiacion;
 
-    let gananciaInfo = document.createElement("p");
-    gananciaInfo.textContent = "Ganancia (dB): " + simulacion.ganancia;
+    let potenciaItem = document.createElement("li");
+    potenciaItem.textContent = "Potencia (W): " + simulacion.potencia;
 
-    let frecuenciaInfo = document.createElement("p");
-    frecuenciaInfo.textContent = "Frecuencia (Hz): " + simulacion.frecuencia;
+    let gananciaItem = document.createElement("li");
+    gananciaItem.textContent = "Ganancia (dB): " + simulacion.ganancia;
 
-    let pireInfo = document.createElement("p");
-    pireInfo.textContent = "PIRE: " + simulacion.pire.toFixed(2) + " dBm";
+    let frecuenciaItem = document.createElement("li");
+    frecuenciaItem.textContent = "Frecuencia (Hz): " + simulacion.frecuencia;
 
+    let pireItem = document.createElement("li");
+    pireItem.textContent = "PIRE: " + simulacion.pire.toFixed(2) + " dBm";
 
-    // Agregar cada información al cardBody
-    cardBody.appendChild(tipoServicioInfo);
-    cardBody.appendChild(alturaInfo);
-    cardBody.appendChild(patronRadiacionInfo);
-    cardBody.appendChild(potenciaInfo);
-    cardBody.appendChild(gananciaInfo);
-    cardBody.appendChild(frecuenciaInfo);
-    cardBody.appendChild(pireInfo);
+    // Agregar cada atributo a la lista
+    infoList.appendChild(tipoServicioItem);
+    infoList.appendChild(alturaItem);
+    infoList.appendChild(patronRadiacionItem);
+    infoList.appendChild(potenciaItem);
+    infoList.appendChild(gananciaItem);
+    infoList.appendChild(frecuenciaItem);
+    infoList.appendChild(pireItem);
+
+    // Agregar la lista al cardBody
+    cardBody.appendChild(infoList);
 
     antenaCard.appendChild(cardHeader);
     antenaCard.appendChild(cardBody);
@@ -133,7 +138,8 @@ function mostrarSimulacion(simulacion) {
     cardContainer.appendChild(antenaCard);
 
     lienzo.appendChild(cardContainer);
-     // Crear el contenedor de la imagen
+
+    // Crear el contenedor de la imagen
     let imagenContainer = document.createElement("div");
     imagenContainer.classList.add("imagen-container");
 
@@ -147,13 +153,13 @@ function mostrarSimulacion(simulacion) {
     imagenContainer.appendChild(imagen);
 
     // Modificar la posición de la imagen a absolute
-
     imagen.style.right = "0%"; // Posicionar a la derecha
     imagen.style.top = "0%"; // Centrar verticalmente
-    imagen.style.transform = "translate(-50%, -50%)"; // Corregir el centro
+    imagen.style.transform = "translate(250%, 0%)"; // Corregir el centro
 
     lienzo.appendChild(imagenContainer);
 }
+
 
 function obtenerImagen(patronRadiacion) {
 
@@ -199,6 +205,3 @@ document.getElementById("simulaciones").addEventListener("click", function (even
         lienzo.style.display = "block";
     }
 });
-
-
-
