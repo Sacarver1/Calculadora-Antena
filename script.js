@@ -147,7 +147,6 @@ function mostrarSimulacion(simulacion) {
     imagenContainer.appendChild(imagen);
 
     // Modificar la posición de la imagen a absolute
-    imagen.style.position = "absolute";
 
     imagen.style.right = "0"; // Posicionar a la derecha
     imagen.style.top = "0%"; // Centrar verticalmente
