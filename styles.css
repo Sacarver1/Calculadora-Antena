@@ -14,9 +14,11 @@ align-items: flex-start; /* Alinea los elementos en la parte superior */
     top: 125px; /* Ajusta la parte superior para evitar superposiciones */
     left: 170px;
     width: calc(100% - 200px);
-    height: calc(100%); /* Ajusta la altura para que no se superponga con el encabezado */
+    height: calc(100% - 150px); /* Ajusta la altura para que no se superponga con el encabezado y el pie de página */
     background-color: #fff;
     border: 1px solid #ccc;
+    overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
+
 }
 
 
