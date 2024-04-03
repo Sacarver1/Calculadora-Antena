@@ -155,7 +155,7 @@ function mostrarSimulacion(simulacion) {
     // Modificar la posición de la imagen a absolute
     imagen.style.right = "0%"; // Posicionar a la derecha
     imagen.style.top = "0%"; // Centrar verticalmente
-    imagen.style.transform = "translate(250%, 0%)"; // Corregir el centro
+    imagen.style.transform = "translate(250%, -50%)"; // Corregir el centro
 
     lienzo.appendChild(imagenContainer);
 }
