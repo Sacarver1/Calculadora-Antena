@@ -148,9 +148,9 @@ function mostrarSimulacion(simulacion) {
 
     // Modificar la posición de la imagen a absolute
 
-    imagen.style.right = "0"; // Posicionar a la derecha
+    imagen.style.right = "0%"; // Posicionar a la derecha
     imagen.style.top = "0%"; // Centrar verticalmente
-    imagen.style.transform = "translateX(-2000%)"; // Centrar verticalmente
+    imagen.style.transform = "translate(-50%, -50%)"; // Corregir el centro
 
     lienzo.appendChild(imagenContainer);
 }
