@@ -16,41 +16,49 @@ function calcularPIRE(potencia, ganancia) {
 
 
 
-function verificarCriterio(pire, frecuencia,altura) {
-        if (pire <= 10) {
-            criterio = "Estación base instalada de manera que la parte más baja del sistema irradiante (antena(s)) está a una altura mínima de 2.2 metros por encima del piso de la zona de público en general.";
-            if(altura>2.2){
-                criterio+="\n\tNo cumple el criterio de instalacion, altura menor a 2.2m";
-            }
-        
-        } else if (pire <= 100) {
-            criterio = "La parte más baja del sistema irradiante (antena(s)) está a una altura mínima de 2.5 metros por encima del piso de la zona de público en general.\n\
+function verificarCriterio(pire, frecuencia, altura) {
+    let criterio = '';
+    let resCriterio='';
+    
+    if (pire <= 10) {
+        criterio = "Estación base instalada de manera que la parte más baja del sistema irradiante (antena(s)) está a una altura mínima de 2.2 metros por encima del piso de la zona de público en general.";
+        if (altura > 2.2) {
+            resCriterio += "\n\tNo cumple el criterio de instalacion, altura menor a 2.2m";
+        }else{
+            resCriterio += "\n\tCumple el criterio de instalacion";
+
+        }
+    } else if (pire <= 100) {
+        criterio = "La parte más baja del sistema irradiante (antena(s)) está a una altura mínima de 2.5 metros por encima del piso de la zona de público en general.\n\
                         \nLa distancia mínima a zonas accesibles al público en general en la dirección del lóbulo principal es de 2 metros para frecuencias menores a 1500 MHz o de 1 metro para frecuencias mayores o iguales a 1500 MHz.\n\
                         \n 	Ninguna otra fuente de radiofrecuencia con PIRE por encima de 10 W se encuentra a una distancia de hasta 10 metros en frecuencias menores a 1500 MHz o 5 metros para frecuencias mayores o iguales a 1500 MHz en la dirección del lóbulo principal(2) y una distancia de hasta 2 metros en otras direcciones para cualquier rango de frecuencia(3).";
-            if(altura>2.5){
-                criterio+="\n\tNo cumple el criterio de instalacion, altura menor a 2.5m";
-            }
-            if(frecuencia<=1500){
-                criterio+="\n\tDistancia mínima a zonas accesibles al público en general en la dirección del lóbulo principal es de 2 metros";
-            }else
-                criterio+="\n\tDistancia mínima a zonas accesibles al público en general en la dirección del lóbulo principal es de 1 metros";
-  
+        if (altura > 2.5) {
+            resCriterio += "\n\tNo cumple el criterio de instalacion, altura menor a 2.5m";
+        }else{
+            resCriterio += "\n\tCumple el criterio de instalacion";
+
         }
-        else {
-            criterio = "La parte más baja radiante del sistema irradiante (antena(s)) está a una altura mínima de Hb metros por encima del piso de la zona de público en general.\n\
+        if (frecuencia <= 1500) {
+            criterio += "\n\tDistancia mínima a zonas accesibles al público en general en la dirección del lóbulo principal es de 2 metros";
+        } else
+            criterio += "\n\tDistancia mínima a zonas accesibles al público en general en la dirección del lóbulo principal es de 1 metros";
+
+    } else {
+        criterio = "La parte más baja radiante del sistema irradiante (antena(s)) está a una altura mínima de Hb metros por encima del piso de la zona de público en general.\n\
                         \nLa distancia mínima a zonas accesibles al público en general en la dirección del lóbulo principal es de D metros.\n\
                         \nNo hay otras fuentes de radiofrecuencia con PIRE por encima de 100 W que se encuentren a una distancia de 5*D metros en la dirección del lóbulo principal y dentro de D metros en otras direcciones(4).";
-        }
+    }
 
-     return criterio;
+    return { criterio: criterio, resCriterio: resCriterio }; // Retorna un objeto con el criterio y resCriterio inicializado como null
 }
+
 
 function agregarSimulacion(nombre, tipoServicio, altura, patronRadiacion, potencia, ganancia, frecuencia) {
     ocultarDialogo();
 
     let pire = calcularPIRE(potencia, ganancia);
 
-    let criterio = verificarCriterio(pire, frecuencia,altura);
+    let  {criterio, resCriterio}  = verificarCriterio(pire, frecuencia, altura); // Usamos destructuring para obtener criterio y resCriterio
 
 
     let simulacionActual = {
@@ -62,7 +70,9 @@ function agregarSimulacion(nombre, tipoServicio, altura, patronRadiacion, potenc
         ganancia: ganancia,
         frecuencia: frecuencia,
         pire: pire,
-        criterio: criterio
+        criterio: criterio,
+        resCriterio: resCriterio // Agregamos el atributo resCriterio
+
     };
 
     simulaciones.push(simulacionActual);
@@ -155,9 +165,45 @@ function mostrarSimulacion(simulacion) {
     // Modificar la posición de la imagen a absolute
     imagen.style.right = "0%"; // Posicionar a la derecha
     imagen.style.top = "0%"; // Centrar verticalmente
-    imagen.style.transform = "translate(250%, -50%)"; // Corregir el centro
+    imagen.style.transform = "translate(150%, -0%)"; // Corregir el centro
 
     lienzo.appendChild(imagenContainer);
+    
+    let criterioContainer = document.createElement("div");
+    criterioContainer.classList.add("card-container");
+    
+    let criterioCard = document.createElement("div");
+    criterioCard.classList.add("card");
+    criterioCard.classList.add("criterio-card");
+
+    let criterioHeader = document.createElement("div");
+    criterioHeader.classList.add("card-header");
+    criterioHeader.textContent = "Criterio de instalación";
+
+    let criterioBody = document.createElement("div");
+    criterioBody.classList.add("card-body");
+
+    // Crear un párrafo para mostrar el criterio
+    let criterioInfo = document.createElement("ul");
+    
+    let criterio=document.createElement("li");
+    criterio.textContent = "Criterio: " + simulacion.criterio;
+    //pire,fre,al
+    
+    let resCriterio=document.createElement("li");
+    resCriterio.textContent="-- "+simulacion.resCriterio+" --";
+    
+    
+    criterioInfo.appendChild(criterio);
+    criterioInfo.appendChild(resCriterio);
+    
+    criterioBody.appendChild(criterioInfo);
+
+    criterioCard.appendChild(criterioHeader);
+    criterioCard.appendChild(criterioBody);
+
+    criterioContainer.appendChild(criterioCard);
+    lienzo.appendChild(criterioContainer);
 }
 
 
