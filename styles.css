@@ -85,6 +85,13 @@ align-items: flex-start; /* Alinea los elementos en la parte superior */
     z-index: 9999;
 }
 body {
+    zoom: 67%;
+    -moz-transform: scale(0.67);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.67);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.67);
+    -webkit-transform-origin: 0 0;
     margin: 0;
     padding: 0;
 }
