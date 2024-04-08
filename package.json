@@ -1,8 +1,32 @@
 {
-    "name": "773",
-    "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
-    "author": "Santiago",
-    "contributors": [],
-    "dependencies": {}
+  "name": "773",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "Santiago",
+  "contributors": [],
+  "dependencies": {
+    "express": "^4.19.2",
+    "firebase": "^10.10.0"
+  },
+  "main": "firebase.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sacarver1/Calculadora-Antena.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sacarver1/Calculadora-Antena/issues"
+  },
+  "homepage": "https://github.com/Sacarver1/Calculadora-Antena#readme",
+  "description": ""
 }

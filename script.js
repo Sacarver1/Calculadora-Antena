@@ -1,3 +1,30 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAHgjo_JjqDhp9roZoau6nuOCcgZNAD_AE",
+  authDomain: "antena-939b6.firebaseapp.com",
+  databaseURL: "https://antena-939b6-default-rtdb.firebaseio.com",
+  projectId: "antena-939b6",
+  storageBucket: "antena-939b6.appspot.com",
+  messagingSenderId: "311565551078",
+  appId: "1:311565551078:web:57a2ad642f8946b3000227",
+  measurementId: "G-LTFBYT3KTS",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const alturaPerson = 2;
+
 function mostrarDialogo() {
   var dialogo = document.getElementById("dialogo");
   dialogo.style.display = "block";
@@ -58,17 +85,19 @@ function hertzToMegahertz(hertz) {
   return hertz / 1000000;
 }
 
-function requiereSeñalizacion() {
-  return true;
+function requiereSeñalizacion(r, d, a) {
+  if (r !== null && d !== null) {
+    return a > r;
+  }
 }
 
-function requiereMedicion(pire, potencia, ganancia) {
-  if (pire <= 2) {
+function requiereMedicion(pire, potencia, ganancia, isAm) {
+  if (isAm) {
+    return true;
+  } else if (pire <= 2) {
     return false;
   } else {
-    var gananciaLineal = Math.pow(10, ganancia / 10);
-
-    var potenciaRadiacion = potencia * gananciaLineal;
+    var potenciaRadiacion = potencia * ganancia;
     var potenciaRadiacion_mW = potenciaRadiacion * 1000;
 
     return potenciaRadiacion_mW <= 100;
@@ -98,6 +127,37 @@ function limiteOcupacional(frecuencia, pire) {
     return 0.0638 * Math.sqrt(pire);
   } else {
     return null;
+  }
+}
+
+function calcularDistanciaHorizontal(r, altura) {
+  const a = altura - alturaPerson;
+  return Math.sqrt(Math.pow(r, 2) - Math.pow(a, 2));
+}
+
+function mostrarResultado(r, d, a) {
+  var resultadoDiv = document.getElementById("resultado");
+  resultadoDiv.innerHTML = "";
+
+  if (r !== null && d !== null) {
+    resultadoDiv.innerHTML = `<p>Distancia mínima a la antena (r): ${r.toFixed(
+      2
+    )} metros</p>`;
+    resultadoDiv.innerHTML += `<p>Distancia horizontal mínima (d): ${d.toFixed(
+      2
+    )} metros</p>`;
+    if (a > r) {
+      resultadoDiv.innerHTML += `<p>La distancia vertical (a) es mayor que la distancia mínima a la antena (r). No es necesario calcular la distancia horizontal (d).</p>`;
+      mostrarModal(
+        "https://www.tesamerica.com/wp-content/uploads/2019/02/aviso-ane-verde-248x300.jpg"
+      );
+    } else {
+      resultadoDiv.innerHTML += `<p>La estación es Normalmente Conforme.</p>`;
+      // mostrar otra imagen si se desea
+    }
+  } else {
+    resultadoDiv.innerHTML =
+      "<p>Por favor, ingrese valores válidos para la frecuencia, potencia y altura.</p>";
   }
 }
 
@@ -134,16 +194,52 @@ function agregarSimulacion(
   mostrarSimulacion(simulacionActual);
 }
 
-function mostrarSimulacion(simulacion) {
-  const requiereSeña = requiereSeñalizacion();
-
+async function mostrarSimulacion(simulacion) {
+  let isAm = false;
   const requiereMedi = requiereMedicion(
     simulacion.pire,
     simulacion.potencia,
-    simulacion.ganancia
+    simulacion.ganancia,
+    isAm
   );
   const limiteOcu = limiteOcupacional(simulacion.pire, simulacion.frecuencia);
   const limitePobla = limitePoblacional(simulacion.pire, simulacion.frecuencia);
+
+  const requiereSeñaOcupacional = requiereSeñalizacion(
+    limiteOcu,
+    calcularDistanciaHorizontal(limiteOcu, simulacion.altura),
+    simulacion.altura
+  );
+  const requiereSeñaPoblacional = requiereSeñalizacion(
+    limitePobla,
+    calcularDistanciaHorizontal(limitePobla, simulacion.altura),
+    simulacion.altura
+  );
+
+  console.log(requiereSeñaPoblacional);
+  console.log(requiereSeñaOcupacional);
+
+  if (requiereSeñaPoblacional) {
+    openModal(
+      "https://www.ane.gov.co/Documentos%20compartidos/ArchivosDescargables/Normatividad/Radiaciones_no_ionizantes/Aviso_Zona_Rebasamiento.jpg?s=6C0EF41B6B4E647036D5BE58A86C6CAD6A23EACB",
+      "Texto de ejemplo"
+    );
+  }
+
+  if (requiereSeñaOcupacional) {
+    openModal(
+      "https://www.ane.gov.co/Documentos%20compartidos/ArchivosDescargables/Normatividad/Radiaciones_no_ionizantes/Aviso_Zona_Ocupacional.jpg?s=A81904D7AC016B535F764C8A9083915AE07D5A9D",
+      "Texto de ejemplo"
+    );
+  }
+
+  // Agregar un documento a una colección
+  // Add a new document in collection "cities"
+  await setDoc(doc(db, "cities", "LA"), {
+    name: "Los Angeles",
+    state: "CA",
+    country: "USA",
+  });
 
   let nombreSimulacion = document.createElement("button");
   nombreSimulacion.textContent = simulacion.nombre;
@@ -195,10 +291,6 @@ function mostrarSimulacion(simulacion) {
   let pireItem = document.createElement("li");
   pireItem.textContent = "PIRE: " + simulacion.pire.toFixed(2) + " dBm";
 
-  const valSeñalizacion = requiereSeña ? "Si" : "No";
-  let señalizacion = document.createElement("li");
-  señalizacion.textContent = "Necesita señalización: " + valSeñalizacion;
-
   const valMedicion = requiereMedi ? "Si" : "No";
   let medicion = document.createElement("li");
   medicion.textContent = "Necesita medición: " + valMedicion;
@@ -206,12 +298,16 @@ function mostrarSimulacion(simulacion) {
   const valOcuacional = limiteOcu !== null ? limiteOcu : 0;
   let limOcuacional = document.createElement("li");
   limOcuacional.textContent =
-    "Distancia limite ocupacional es de: " + valOcuacional + " metros";
+    "Distancia limite ocupacional es de: " +
+    valOcuacional.toFixed(2) +
+    " metros";
 
   const valPoblacional = limitePobla !== null ? limitePobla : 0;
   let limPoblacional = document.createElement("li");
   limPoblacional.textContent =
-    "Distancia limite poblacional es de: " + valPoblacional + " metros";
+    "Distancia limite poblacional es de: " +
+    valPoblacional.toFixed(2) +
+    " metros";
 
   // Agregar cada atributo a la lista
   infoList.appendChild(tipoServicioItem);
@@ -221,7 +317,6 @@ function mostrarSimulacion(simulacion) {
   infoList.appendChild(gananciaItem);
   infoList.appendChild(frecuenciaItem);
   infoList.appendChild(pireItem);
-  infoList.appendChild(señalizacion);
   infoList.appendChild(medicion);
   infoList.appendChild(limOcuacional);
   infoList.appendChild(limPoblacional);
@@ -352,3 +447,33 @@ document
       lienzo.style.display = "block";
     }
   });
+
+// Obtener los elementos del DOM
+const modal = document.getElementById("modal");
+const modalImage = document.getElementById("modalImage");
+const modalText = document.getElementById("modalText");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const openModalBtn = document.getElementById("openModalBtn");
+const closeIcon = document.getElementsByClassName("close")[0];
+
+// Función para abrir el modal con una imagen y texto específicos
+function openModal(imageUrl, text) {
+  modal.style.display = "block"; // Mostrar el modal
+  modalImage.src = imageUrl; // Establecer la imagen
+  modalText.innerText = text; // Establecer el texto
+}
+
+closeModalBtn.addEventListener("click", function () {
+  modal.style.display = "none"; // Ocultar el modal
+});
+
+closeIcon.onclick = function () {
+  modal.style.display = "none"; // Ocultar el modal al hacer clic en la "X"
+};
+
+// Cerrar el modal haciendo clic fuera de él
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};

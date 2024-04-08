@@ -1,0 +1,10 @@
+# Ignorar directorios
+node_modules/
+dist/
+
+# Ignorar archivos
+.env
+.DS_Store
+
+# Ignorar el archivo package-lock.json
+package-lock.json
