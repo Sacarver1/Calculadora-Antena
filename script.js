@@ -1,14 +1,4 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+firebase.initializeApp({
   apiKey: "AIzaSyAHgjo_JjqDhp9roZoau6nuOCcgZNAD_AE",
   authDomain: "antena-939b6.firebaseapp.com",
   databaseURL: "https://antena-939b6-default-rtdb.firebaseio.com",
@@ -17,11 +7,23 @@ const firebaseConfig = {
   messagingSenderId: "311565551078",
   appId: "1:311565551078:web:57a2ad642f8946b3000227",
   measurementId: "G-LTFBYT3KTS",
-};
+});
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+var db = firebase.firestore();
+
+db.collection("users")
+  .add({
+    first: "Ada",
+    last: "Lovelace",
+    born: 1815,
+  })
+  .then((docRef) => {
+    console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+    console.error("Error adding document: ", error);
+  });
 
 const alturaPerson = 2;
 
@@ -194,7 +196,7 @@ function agregarSimulacion(
   mostrarSimulacion(simulacionActual);
 }
 
-async function mostrarSimulacion(simulacion) {
+function mostrarSimulacion(simulacion) {
   let isAm = false;
   const requiereMedi = requiereMedicion(
     simulacion.pire,
@@ -219,27 +221,8 @@ async function mostrarSimulacion(simulacion) {
   console.log(requiereSeñaPoblacional);
   console.log(requiereSeñaOcupacional);
 
-  if (requiereSeñaPoblacional) {
-    openModal(
-      "https://www.ane.gov.co/Documentos%20compartidos/ArchivosDescargables/Normatividad/Radiaciones_no_ionizantes/Aviso_Zona_Rebasamiento.jpg?s=6C0EF41B6B4E647036D5BE58A86C6CAD6A23EACB",
-      "Texto de ejemplo"
-    );
-  }
-
-  if (requiereSeñaOcupacional) {
-    openModal(
-      "https://www.ane.gov.co/Documentos%20compartidos/ArchivosDescargables/Normatividad/Radiaciones_no_ionizantes/Aviso_Zona_Ocupacional.jpg?s=A81904D7AC016B535F764C8A9083915AE07D5A9D",
-      "Texto de ejemplo"
-    );
-  }
-
-  // Agregar un documento a una colección
+  // Add a new document in collection
   // Add a new document in collection "cities"
-  await setDoc(doc(db, "cities", "LA"), {
-    name: "Los Angeles",
-    state: "CA",
-    country: "USA",
-  });
 
   let nombreSimulacion = document.createElement("button");
   nombreSimulacion.textContent = simulacion.nombre;
