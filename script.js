@@ -127,7 +127,7 @@ function requiereMedicion(pire, potencia, ganancia, isAm) {
     var potenciaRadiacion = potencia * ganancia;
     var potenciaRadiacion_mW = potenciaRadiacion * 1000;
 
-    return potenciaRadiacion_mW <= 100;
+    return potenciaRadiacion_mW >= 100;
   }
 }
 
@@ -159,6 +159,10 @@ function limiteOcupacional(frecuencia, pire) {
 
 function calcularDistanciaHorizontal(r, altura) {
   const a = altura - alturaPerson;
+  if (a > r) {
+    console.log("altura más que r");
+    return 0;
+  }
   return Math.sqrt(Math.pow(r, 2) - Math.pow(a, 2));
 }
 
@@ -229,23 +233,15 @@ function mostrarSimulacion(simulacion) {
     simulacion.ganancia,
     isAm
   );
-  const limiteOcu = limiteOcupacional(simulacion.pire, simulacion.frecuencia);
-
-  const requiereSeñaOcupacional = requiereSeñalizacion(
-    limiteOcu,
-    calcularDistanciaHorizontal(limiteOcu, simulacion.altura),
+  const limiteOcu = calcularDistanciaHorizontal(
+    limiteOcupacional(simulacion.pire, simulacion.frecuencia),
     simulacion.altura
   );
 
-  const limitePobla = limitePoblacional(simulacion.pire, simulacion.frecuencia);
-  const requiereSeñaPoblacional = requiereSeñalizacion(
-    limitePobla,
-    calcularDistanciaHorizontal(limitePobla, simulacion.altura),
+  const limitePobla = calcularDistanciaHorizontal(
+    limitePoblacional(simulacion.pire, simulacion.frecuencia),
     simulacion.altura
   );
-
-  console.log(requiereSeñaPoblacional);
-  console.log(requiereSeñaOcupacional);
 
   // Add a new document in collection
   // Add a new document in collection "cities"
@@ -427,7 +423,10 @@ function mostrarSimulacion(simulacion) {
     imagen2.classList.add("imagen");
   }
 
-  if (!zona_ocupacional && !zona_rebasamiento) {
+  if (
+    zona_ocupacional(simulacion) === false &&
+    zona_rebasamiento(simulacion) === false
+  ) {
     let mensaje = document.createElement("p");
     mensaje.textContent = "No se requiere señalización.";
     imagenCardBody.appendChild(mensaje);
@@ -448,14 +447,20 @@ function mostrarSimulacion(simulacion) {
 
   lienzo.appendChild(imagenContainer2);
 }
-function zona_ocupacional() {
-  return true;
+function zona_ocupacional(simulacion) {
+  const limitePobla = limitePoblacional(simulacion.pire, simulacion.frecuencia);
+
+  if (simulacion.altura > limitePobla) {
+    return false;
+  }
+  const dist = calcularDistanciaHorizontal(limitePobla, simulacion.altura);
+  return dist > 0;
 }
 
 function zona_rebasamiento(simulacion) {
   const limitePobla = limitePoblacional(simulacion.pire, simulacion.frecuencia);
 
-  if (simulacion.altura - alturaPerson > limitePobla) {
+  if (simulacion.altura > limitePobla) {
     return false;
   }
   const dist = calcularDistanciaHorizontal(limitePobla, simulacion.altura);
@@ -573,13 +578,4 @@ document.addEventListener("DOMContentLoaded", function () {
       modalComentarios.style.display = "none";
     }
   };
-
-  formularioComentario.addEventListener("submit", function (event) {
-    event.preventDefault();
-    var comentario = document.getElementById("texto-comentario").value;
-    comentarios.push(comentario);
-    console.log("Comentarios:", comentarios);
-    document.getElementById("texto-comentario").value = "";
-    modalComentarios.style.display = "none";
-  });
 });
