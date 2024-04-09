@@ -12,18 +12,47 @@ firebase.initializeApp({
 // Initialize Firebase
 var db = firebase.firestore();
 
-db.collection("users")
-  .add({
-    first: "Ada",
-    last: "Lovelace",
-    born: 1815,
-  })
-  .then((docRef) => {
-    console.log("Document written with ID: ", docRef.id);
-  })
-  .catch((error) => {
-    console.error("Error adding document: ", error);
+const commentsRef = db.collection("comments");
+
+function addComment() {
+  const name = document.getElementById("name-input").value;
+  const comment = document.getElementById("texto-comentario").value;
+
+  // Añade el comentario a Firestore
+  commentsRef
+    .add({
+      name: name,
+      comment: comment,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .then(() => {
+      console.log("Comentario agregado correctamente");
+      document.getElementById("name-input").value = "";
+      document.getElementById("texto-comentario").value = "";
+    })
+    .catch((error) => {
+      console.error("Error al agregar comentario: ", error);
+    });
+}
+
+// Escucha los cambios en la colección de comentarios
+commentsRef.orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+  const commentsList = document.getElementById("comments-list");
+  commentsList.innerHTML = "";
+  snapshot.forEach((doc) => {
+    const commentData = doc.data();
+    if (commentData.timestamp) {
+      // Verifica si timestamp no es null
+      const commentElement = document.createElement("div");
+      const timestamp = commentData.timestamp.toDate(); // Convierte el timestamp a un objeto de fecha
+      commentElement.innerHTML = `
+            <strong>${commentData.name}</strong>: ${commentData.comment}<br>
+            <small>${timestamp.toLocaleString()}</small>
+        `;
+      commentsList.appendChild(commentElement);
+    }
   });
+});
 
 const alturaPerson = 2;
 
@@ -38,8 +67,6 @@ function ocultarDialogo() {
 }
 
 let simulaciones = [];
-
-
 
 function verificarCriterio(pire, frecuencia, altura) {
   let criterio = "";
@@ -172,7 +199,7 @@ function agregarSimulacion(
 ) {
   ocultarDialogo();
 
-  let pire = ((10 * Math.log10(potencia * 1000))+ganancia);
+  let pire = 10 * Math.log10(potencia * 1000) + ganancia;
 
   let { criterio, resCriterio } = verificarCriterio(pire, frecuencia, altura); // Usamos destructuring para obtener criterio y resCriterio
 
@@ -264,11 +291,11 @@ function mostrarSimulacion(simulacion) {
   potenciaItem.textContent = "Potencia (W): " + simulacion.potencia;
 
   let potenciaDBm = 10 * Math.log10(simulacion.potencia * 1000);
-potenciaItem.textContent += ", Potencia (dBm): " + potenciaDBm.toFixed(2) + " dBm";
+  potenciaItem.textContent +=
+    ", Potencia (dBm): " + potenciaDBm.toFixed(2) + " dBm";
 
   let gananciaItem = document.createElement("li");
   gananciaItem.textContent = "Ganancia (dBi): " + simulacion.ganancia;
-
 
   let frecuenciaItem = document.createElement("li");
   frecuenciaItem.textContent = "Frecuencia (Hz): " + simulacion.frecuencia;
@@ -463,33 +490,33 @@ window.onclick = function (event) {
   }
 };
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   var botonComentarios = document.getElementById("boton-comentarios");
-    var modalComentarios = document.getElementById("modal-comentarios");
-    var span = modalComentarios.querySelector(".close");
+  var modalComentarios = document.getElementById("modal-comentarios");
+  var span = modalComentarios.querySelector(".close");
   var formularioComentario = document.getElementById("formulario-comentario");
   var comentarios = []; // Array para almacenar los comentarios
 
-  botonComentarios.onclick = function() {
-      modalComentarios.style.display = "block";
-  }
+  botonComentarios.onclick = function () {
+    modalComentarios.style.display = "block";
+  };
 
-  span.onclick = function() {
+  span.onclick = function () {
+    modalComentarios.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modalComentarios) {
       modalComentarios.style.display = "none";
-  }
+    }
+  };
 
-  window.onclick = function(event) {
-      if (event.target == modalComentarios) {
-          modalComentarios.style.display = "none";
-      }
-  }
-
-  formularioComentario.addEventListener("submit", function(event) {
-      event.preventDefault(); 
-      var comentario = document.getElementById("texto-comentario").value;
-      comentarios.push(comentario);
-      console.log("Comentarios:", comentarios);
-      document.getElementById("texto-comentario").value = '';
-      modalComentarios.style.display = "none";
+  formularioComentario.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var comentario = document.getElementById("texto-comentario").value;
+    comentarios.push(comentario);
+    console.log("Comentarios:", comentarios);
+    document.getElementById("texto-comentario").value = "";
+    modalComentarios.style.display = "none";
   });
 });

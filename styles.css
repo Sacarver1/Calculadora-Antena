@@ -400,6 +400,36 @@ nav ul li a:hover {
     border-radius: 5px; 
 }
 
+.nombre-comentario{
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    padding: 5px;
+    margin: 15px 0px;
+    width: 100%;
+}
+
+#comments-list {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+  .comment {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+  }
+  
+  .comment p {
+    margin: 0;
+  }
+  
+  .comment small {
+    color: #888;
+  }
+  
 /* Estilo para el textarea de comentarios */
 .modal-comentarios textarea {
     width: 100%; 

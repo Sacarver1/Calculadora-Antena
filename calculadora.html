@@ -108,11 +108,16 @@
     <div id="modal-comentarios" class="modal-comentarios">
         <div class="modal-content">
             <span class="close">&times;</span>
+
             <h2>Déjanos tus comentarios</h2>
             <form id="formulario-comentario">
+
+                <input type="text" id="name-input" placeholder="Tu nombre" class="nombre-comentario">
                 <textarea id="texto-comentario" placeholder="Escribe tu comentario aquí"></textarea>
-                <button type="submit">Enviar</button>
+                <button onclick="addComment()">Enviar</button>
             </form>
+            <h2 style="text-align: left;">Comentarios:</h2>
+            <div id="comments-list"></div>
         </div>
     </div>
     <!-- Modal -->
@@ -124,17 +129,19 @@
             <button id="closeModalBtn">Cerrar</button>
         </div>
     </div>
-    
+
     <div id="creditos-container">
         <div id="creditos">
-            <p> DESARROLLADO POR<span>Santiago López (20202578075)</span><span>Daniel Zamora (20181578129)</span><span>Felipe Cantor (20202578142)</span><span>Sofia Higuera (20202578073)</span><span>Marlon Patiño Bernal</span></p>
+            <p> DESARROLLADO POR<span>Santiago López (20202578075)</span><span>Daniel Zamora
+                    (20181578129)</span><span>Felipe Cantor (20202578142)</span><span>Sofia Higuera
+                    (20202578073)</span><span>Marlon Patiño Bernal</span></p>
         </div>
     </div>
-    
+
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-     <script src="script.js"></script> <!-- Archivo de script JavaScript -->
-    
+    <script src="script.js"></script> <!-- Archivo de script JavaScript -->
+
 </body>
 
 </html>
