@@ -450,6 +450,68 @@ imagenContainer2.appendChild(imagenCard);
 
 lienzo.appendChild(imagenContainer2);
 
+  
+
+let imagenContainer3 = document.createElement("div");
+imagenContainer3.classList.add("card-container");
+
+let imagenCard3 = document.createElement("div");
+imagenCard3.classList.add("card");
+
+let cardHeaderImagenes3 = document.createElement("div");
+cardHeaderImagenes3.classList.add("card-header");
+cardHeaderImagenes3.textContent = "Señalizaciones requeridas:";
+
+let imagenCardBody3 = document.createElement("div");
+imagenCardBody3.classList.add("card-body");
+
+let imageng = document.createElement("img");
+imageng.src = "img/torre.png"; 
+imageng.alt = "Zona";
+imageng.classList.add("imagen1");
+imageng.style.maxWidth = "300px"; 
+imageng.style.height = "auto";
+imagenCardBody3.appendChild(imageng);
+
+// Crear elementos de párrafo para "R:", "a:", y "d:"
+let parrafoR = document.createElement("p");
+parrafoR.textContent = "r: ";
+parrafoR.style.fontWeight = "bold";
+parrafoR.style.fontSize = "large";
+imagenCardBody3.appendChild(parrafoR);
+
+let parrafoA = document.createElement("p");
+parrafoA.textContent = "a: ";
+parrafoA.style.fontWeight = "bold";
+parrafoA.style.fontSize = "large";
+imagenCardBody3.appendChild(parrafoA);
+
+let parrafoD = document.createElement("p");
+parrafoD.textContent = "d: ";
+parrafoD.style.fontWeight = "bold";
+parrafoD.style.fontSize = "large";
+imagenCardBody3.appendChild(parrafoD);
+
+// Crear elementos de texto para variables generales
+let variableR = document.createElement("span");
+let variableA = document.createElement("span");
+let variableD = document.createElement("span");
+
+// Agregar elementos de texto para variables generales junto a los párrafos
+parrafoR.appendChild(variableR);
+parrafoA.appendChild(variableA);
+parrafoD.appendChild(variableD);
+
+// Agregar la tarjeta al contenedor en el lienzo
+imagenCard3.appendChild(cardHeaderImagenes3);
+imagenCard3.appendChild(imagenCardBody3);
+imagenContainer3.appendChild(imagenCard3);
+
+// Agregar el contenedor al lienzo
+lienzo.appendChild(imagenContainer3);
+
+
+
 }
 function zona_ocupacional(){
   return true;
