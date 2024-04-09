@@ -460,3 +460,34 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
+
+document.addEventListener("DOMContentLoaded", function() {
+  var botonComentarios = document.getElementById("boton-comentarios");
+    var modalComentarios = document.getElementById("modal-comentarios");
+    var span = modalComentarios.querySelector(".close");
+  var formularioComentario = document.getElementById("formulario-comentario");
+  var comentarios = []; // Array para almacenar los comentarios
+
+  botonComentarios.onclick = function() {
+      modalComentarios.style.display = "block";
+  }
+
+  span.onclick = function() {
+      modalComentarios.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+      if (event.target == modalComentarios) {
+          modalComentarios.style.display = "none";
+      }
+  }
+
+  formularioComentario.addEventListener("submit", function(event) {
+      event.preventDefault(); 
+      var comentario = document.getElementById("texto-comentario").value;
+      comentarios.push(comentario);
+      console.log("Comentarios:", comentarios);
+      document.getElementById("texto-comentario").value = '';
+      modalComentarios.style.display = "none";
+  });
+});

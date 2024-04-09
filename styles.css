@@ -347,18 +347,100 @@ nav ul li a:hover {
   }
   
   #modalImage {
-    width: 35%; /* Tamaño de la imagen al 35% del tamaño del modal */
+    width: 35%;
     border-radius: 5px;
     margin-bottom: 20px;
   }
   
   #modalText {
-    font-size: 18px; /* Tamaño de fuente más grande para hacerlo más llamativo */
-    color: #333; /* Cambiar color del texto */
+    font-size: 18px; 
+    color: #333;
     margin-bottom: 20px;
   }
   
+/* Estilos para el botón pequeño */
+#boton-comentarios {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #c300ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    
+}
 
+#boton-comentarios:hover {
+    background-color: #a400b3ce;
+}
+/* Estilo para el modal de comentarios */
+.modal-comentarios {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+/* Contenido de la modal de comentarios */
+.modal-comentarios .modal-content {
+    background-color: #fefefe; 
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888; 
+    width: 50%;
+    border-radius: 5px; 
+}
+
+/* Estilo para el textarea de comentarios */
+.modal-comentarios textarea {
+    width: 100%; 
+    height: 200px; 
+    resize: vertical;
+    padding: 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    box-sizing: border-box; 
+    margin-bottom: 10px; 
+}
+/* Estilo para el botón de enviar */
+.modal-comentarios button[type="submit"] {
+    background-color: #af4caf; 
+    color: white; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+}
+
+/* Estilo para el botón de enviar al pasar el mouse */
+.modal-comentarios button[type="submit"]:hover {
+    background-color: #9d45a0; 
+}
+#creditos-container {
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    width: 15%; 
+    padding: 10px; 
+    background-color: #f8f9fa; 
+    
+}
+
+#creditos p span {
+    display: block; 
+    margin-bottom: 5px; 
+    
+}
 
 
 
