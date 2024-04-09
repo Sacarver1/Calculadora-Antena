@@ -389,14 +389,14 @@ let imagen1 = document.createElement("img");
 let imagen2 = document.createElement("img");
 
 if(zona_ocupacional()){
-  imagen1.src = "img/zona_ocupacional.png"; 
+  imagen1.src = "img/zona_ocupacional.PNG"; 
   imagen1.alt = "Zona Ocupacional";
   imagen1.classList.add("imagen");
 
 }
 
 if(zona_rebasamiento()){
-  imagen2.src = "img/zona_rebasamiento.png";
+  imagen2.src = "img/zona_rebasamiento.PNG";
   imagen2.alt = "Zona de Rebasamiento";
   imagen2.classList.add("imagen");
 }
