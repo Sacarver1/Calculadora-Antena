@@ -460,7 +460,7 @@ imagenCard3.classList.add("card");
 
 let cardHeaderImagenes3 = document.createElement("div");
 cardHeaderImagenes3.classList.add("card-header");
-cardHeaderImagenes3.textContent = "Señalizaciones requeridas:";
+cardHeaderImagenes3.textContent = "Mediciones:";
 
 let imagenCardBody3 = document.createElement("div");
 imagenCardBody3.classList.add("card-body");
