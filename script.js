@@ -39,9 +39,7 @@ function ocultarDialogo() {
 
 let simulaciones = [];
 
-function calcularPIRE(potencia, ganancia) {
-  return 10 * Math.log10(potencia) + ganancia;
-}
+
 
 function verificarCriterio(pire, frecuencia, altura) {
   let criterio = "";
@@ -80,7 +78,7 @@ function verificarCriterio(pire, frecuencia, altura) {
                         \nNo hay otras fuentes de radiofrecuencia con PIRE por encima de 100 W que se encuentren a una distancia de 5*D metros en la dirección del lóbulo principal y dentro de D metros en otras direcciones(4).";
   }
 
-  return { criterio: criterio, resCriterio: resCriterio }; // Retorna un objeto con el criterio y resCriterio inicializado como null
+  return { criterio: criterio, resCriterio: "" }; // Retorna un objeto con el criterio y resCriterio inicializado como null
 }
 
 function hertzToMegahertz(hertz) {
@@ -174,7 +172,7 @@ function agregarSimulacion(
 ) {
   ocultarDialogo();
 
-  let pire = calcularPIRE(potencia, ganancia);
+  let pire = ((10 * Math.log10(potencia * 1000))+ganancia);
 
   let { criterio, resCriterio } = verificarCriterio(pire, frecuencia, altura); // Usamos destructuring para obtener criterio y resCriterio
 
@@ -265,8 +263,12 @@ function mostrarSimulacion(simulacion) {
   let potenciaItem = document.createElement("li");
   potenciaItem.textContent = "Potencia (W): " + simulacion.potencia;
 
+  let potenciaDBm = 10 * Math.log10(simulacion.potencia * 1000);
+potenciaItem.textContent += ", Potencia (dBm): " + potenciaDBm.toFixed(2) + " dBm";
+
   let gananciaItem = document.createElement("li");
-  gananciaItem.textContent = "Ganancia (dB): " + simulacion.ganancia;
+  gananciaItem.textContent = "Ganancia (dBi): " + simulacion.ganancia;
+
 
   let frecuenciaItem = document.createElement("li");
   frecuenciaItem.textContent = "Frecuencia (Hz): " + simulacion.frecuencia;
