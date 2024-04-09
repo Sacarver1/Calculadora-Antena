@@ -448,15 +448,8 @@ function mostrarSimulacion(simulacion) {
 
   lienzo.appendChild(imagenContainer2);
 }
-
-function zona_ocupacional(simulacion) {
-  const limiteOcu = limiteOcupacional(simulacion.pire, simulacion.frecuencia);
-  const dist = calcularDistanciaHorizontal(limiteOcu, simulacion.altura);
-
-  if (simulacion.altura - alturaPerson > limiteOcu) {
-    return false;
-  }
-  return dist > 0;
+function zona_ocupacional() {
+  return true;
 }
 
 function zona_rebasamiento(simulacion) {
