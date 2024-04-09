@@ -345,7 +345,7 @@ function mostrarSimulacion(simulacion) {
 
   // Crear el contenedor de la imagen
   let imagenContainer = document.createElement("div");
-  imagenContainer.classList.add("imagen-container");
+  imagenContainer.classList.add("imagen-container1");
 
   // Crear la imagen
   let imagen = document.createElement("img");
@@ -397,7 +397,71 @@ function mostrarSimulacion(simulacion) {
 
   criterioContainer.appendChild(criterioCard);
   lienzo.appendChild(criterioContainer);
+
+
+  let imagenContainer2 = document.createElement("div");
+imagenContainer2.classList.add("card-container");
+
+let imagenCard = document.createElement("div");
+imagenCard.classList.add("card");
+
+let cardHeaderImagenes = document.createElement("div");
+cardHeaderImagenes.classList.add("card-header");
+cardHeaderImagenes.textContent = "Señalizaciones requeridas:";
+
+let imagenCardBody = document.createElement("div");
+imagenCardBody.classList.add("card-body");
+
+let imagen1 = document.createElement("img");
+let imagen2 = document.createElement("img");
+
+if(zona_ocupacional()){
+  imagen1.src = "img/zona_ocupacional.PNG"; 
+  imagen1.alt = "Zona Ocupacional";
+  imagen1.classList.add("imagen");
+
 }
+
+if(zona_rebasamiento()){
+  imagen2.src = "img/zona_rebasamiento.PNG";
+  imagen2.alt = "Zona de Rebasamiento";
+  imagen2.classList.add("imagen");
+}
+
+if(!zona_ocupacional&&!zona_rebasamiento){
+  let mensaje = document.createElement("p");
+  mensaje.textContent = "No se requiere señalización.";
+  imagenCardBody.appendChild(mensaje);
+}
+
+
+imagen1.style.maxWidth = "300px"; 
+imagen2.style.maxWidth = "300px"; 
+
+imagen1.style.height = "auto";
+imagen2.style.height = "auto";
+imagenCardBody.appendChild(imagen1);
+imagenCardBody.appendChild(imagen2);
+
+imagenCard.appendChild(cardHeaderImagenes);
+imagenCard.appendChild(imagenCardBody);
+
+imagenContainer2.appendChild(imagenCard);
+
+lienzo.appendChild(imagenContainer2);
+
+}
+function zona_ocupacional(){
+  return true;
+}
+
+function zona_rebasamiento(){
+
+
+  return true;
+
+}
+
 
 function obtenerImagen(patronRadiacion) {
   if (patronRadiacion === "direccional") {
