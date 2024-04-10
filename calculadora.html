@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calc Res.773</title>
     <link rel="stylesheet" href="styles.css"> <!-- Archivo de estilos CSS -->
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js"></script>
 </head>
 
 <body>
+
     <header id="main-header">
         <a id="logo-header" href="#">
             <img src="img/logo.png" alt="Logo Universidad"> <!-- Logo de la universidad -->
@@ -114,7 +113,7 @@
 
                 <input type="text" id="name-input" placeholder="Tu nombre" class="nombre-comentario">
                 <textarea id="texto-comentario" placeholder="Escribe tu comentario aquí"></textarea>
-                <button onclick="addComment()">Enviar</button>
+                <button id="btnEnviar">Enviar</button>
             </form>
             <h2 style="text-align: left;">Comentarios:</h2>
             <div id="comments-list"></div>
@@ -137,11 +136,8 @@
                     (20202578073)</span><span>Marlon Patiño Bernal</span></p>
         </div>
     </div>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="script.js"></script> <!-- Archivo de script JavaScript -->
-
+    <script src="script.js"></script>
+    <script src="firebase.js" type="module"> </script>
 </body>
 
 </html>
