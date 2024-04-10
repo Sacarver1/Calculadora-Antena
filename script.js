@@ -143,7 +143,8 @@ function agregarSimulacion(
 }
 
 function mostrarSimulacion(simulacion) {
-  let isAm = false;
+  let isAm = simulacion.tipoServicio === "radiodifusion-am";
+
   const requiereMedi = requiereMedicion(
     simulacion.pire,
     simulacion.potencia,
