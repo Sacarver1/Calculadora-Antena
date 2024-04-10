@@ -104,7 +104,6 @@ function limiteOcupacional(frecuencia, pire) {
 function calcularDistanciaHorizontal(r, altura) {
   const a = altura - alturaPerson;
   if (a > r) {
-    console.log("altura más que r");
     return 0;
   }
   return Math.sqrt(Math.pow(r, 2) - Math.pow(a, 2));
@@ -249,18 +248,31 @@ function mostrarSimulacion(simulacion) {
   medicion.textContent = "Necesita medición: " + valMedicion;
 
   const valOcuacional = limiteOcu !== null ? limiteOcu : 0;
+
   let limOcuacional = document.createElement("li");
-  limOcuacional.textContent =
-    "Distancia limite ocupacional es de: " +
-    valOcuacional.toFixed(2) +
-    " metros";
+
+  if (valOcuacional === 0) {
+    limOcuacional.textContent =
+      "No requiere señalización para el limite ocupacional ";
+  } else {
+    limOcuacional.textContent =
+      "Distancia limite ocupacional es de: " +
+      valOcuacional.toFixed(2) +
+      " metros";
+  }
 
   const valPoblacional = limitePobla !== null ? limitePobla : 0;
   let limPoblacional = document.createElement("li");
-  limPoblacional.textContent =
-    "Distancia limite poblacional es de: " +
-    valPoblacional.toFixed(2) +
-    " metros";
+
+  if (valPoblacional === 0) {
+    limPoblacional.textContent =
+      "No requiere señalizaciín para el limite poblacional";
+  } else {
+    limPoblacional.textContent =
+      "Distancia limite poblacional es de: " +
+      valPoblacional.toFixed(2) +
+      " metros";
+  }
 
   // Agregar cada atributo a la lista
   infoList.appendChild(tipoServicioItem);
