@@ -273,6 +273,7 @@ nav ul li a:hover {
 
 .card-body {
     display: flex; /* Utilizar flexbox para alinear los elementos horizontalmente */
+    justify-content: center;
 }
 
 /* Estilos para el modal */
@@ -474,3 +475,26 @@ nav ul li a:hover {
 
 
 
+.contenedor-imagen {
+    position: relative; /* Importante para posicionar el texto correctamente */
+    width: 650px; /* Asegurar que el contenedor ocupe todo el ancho */
+    height: auto;
+}
+
+.texto-encima-imagen1 {
+    position: absolute;
+    top: 3em;
+    left: 20em;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.texto-encima-imagen2 {
+    position: absolute;
+    top: 3em;
+    left: 29em;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+}

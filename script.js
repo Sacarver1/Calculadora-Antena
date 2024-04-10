@@ -109,32 +109,6 @@ function calcularDistanciaHorizontal(r, altura) {
   return Math.sqrt(Math.pow(r, 2) - Math.pow(a, 2));
 }
 
-function mostrarResultado(r, d, a) {
-  var resultadoDiv = document.getElementById("resultado");
-  resultadoDiv.innerHTML = "";
-
-  if (r !== null && d !== null) {
-    resultadoDiv.innerHTML = `<p>Distancia mínima a la antena (r): ${r.toFixed(
-      2
-    )} metros</p>`;
-    resultadoDiv.innerHTML += `<p>Distancia horizontal mínima (d): ${d.toFixed(
-      2
-    )} metros</p>`;
-    if (a > r) {
-      resultadoDiv.innerHTML += `<p>La distancia vertical (a) es mayor que la distancia mínima a la antena (r). No es necesario calcular la distancia horizontal (d).</p>`;
-      mostrarModal(
-        "https://www.tesamerica.com/wp-content/uploads/2019/02/aviso-ane-verde-248x300.jpg"
-      );
-    } else {
-      resultadoDiv.innerHTML += `<p>La estación es Normalmente Conforme.</p>`;
-      // mostrar otra imagen si se desea
-    }
-  } else {
-    resultadoDiv.innerHTML =
-      "<p>Por favor, ingrese valores válidos para la frecuencia, potencia y altura.</p>";
-  }
-}
-
 function agregarSimulacion(
   nombre,
   tipoServicio,
@@ -185,9 +159,6 @@ function mostrarSimulacion(simulacion) {
     limitePoblacional(simulacion.pire, simulacion.frecuencia),
     simulacion.altura
   );
-
-  // Add a new document in collection
-  // Add a new document in collection "cities"
 
   let nombreSimulacion = document.createElement("button");
   nombreSimulacion.textContent = simulacion.nombre;
@@ -312,7 +283,7 @@ function mostrarSimulacion(simulacion) {
   // Modificar la posición de la imagen a absolute
   imagen.style.right = "0%"; // Posicionar a la derecha
   imagen.style.top = "0%"; // Centrar verticalmente
-  imagen.style.transform = "translate(150%, -0%)"; // Corregir el centro
+  //imagen.style.transform = "translate(150%, -0%)"; // Corregir el centro
 
   lienzo.appendChild(imagenContainer);
 
@@ -364,19 +335,29 @@ function mostrarSimulacion(simulacion) {
   let imagenCardBody = document.createElement("div");
   imagenCardBody.classList.add("card-body");
 
+  let containerImg1CardBody = document.createElement("div");
+  let containerImg2CardBody = document.createElement("div");
   let imagen1 = document.createElement("img");
   let imagen2 = document.createElement("img");
+
+  containerImg1CardBody.style.marginLeft = "10px";
+  imagenCardBody.appendChild(containerImg1CardBody);
+  imagenCardBody.appendChild(containerImg2CardBody);
+
+  let señalizacionInfo = false;
 
   if (zona_ocupacional(simulacion)) {
     imagen1.src = "img/zona_ocupacional.PNG";
     imagen1.alt = "Zona Ocupacional";
     imagen1.classList.add("imagen");
+    señalizacionInfo = true;
   }
 
   if (zona_rebasamiento(simulacion)) {
     imagen2.src = "img/zona_rebasamiento.PNG";
     imagen2.alt = "Zona de Rebasamiento";
     imagen2.classList.add("imagen");
+    señalizacionInfo = true;
   }
 
   if (
@@ -386,6 +367,43 @@ function mostrarSimulacion(simulacion) {
     let mensaje = document.createElement("p");
     mensaje.textContent = "No se requiere señalización.";
     imagenCardBody.appendChild(mensaje);
+    señalizacionInfo = false;
+  }
+
+  let cardHeaderImag = document.createElement("div");
+  cardHeaderImag.classList.add("card-header");
+
+  cardHeaderImag.textContent = "Ejemplo señalización";
+
+  let imagenCardBody2 = document.createElement("div");
+  imagenCardBody2.classList.add("card-body");
+  imagenCardBody2.classList.add("contenedor-imagen");
+
+  if (señalizacionInfo) {
+    let imagen_Container = document.createElement("div");
+    let imagenEjemplo = document.createElement("img");
+    imagenEjemplo.src = "img/señalización.PNG";
+    imagenEjemplo.alt = "Señalización";
+
+    imagenEjemplo.style.width = "auto";
+    imagenEjemplo.style.height = "auto";
+    imagenEjemplo.style.marginBottom = "20px";
+    imagenCardBody2.appendChild(imagenEjemplo);
+
+    let textoEncimaImagen = document.createElement("div");
+    textoEncimaImagen.textContent = valOcuacional.toFixed(2) + "m";
+    textoEncimaImagen.classList.add("texto-encima-imagen1");
+
+    let textoEncimaImagen2 = document.createElement("div");
+    textoEncimaImagen2.textContent = valPoblacional.toFixed(2) + "m";
+    textoEncimaImagen2.classList.add("texto-encima-imagen2");
+
+    imagenCardBody2.appendChild(textoEncimaImagen);
+    imagenCardBody2.appendChild(textoEncimaImagen2);
+    imagenCardBody2.appendChild(imagen_Container);
+    lienzo.appendChild(imagen_Container);
+    imagenCard.appendChild(cardHeaderImag);
+    imagenCard.appendChild(imagenCardBody2);
   }
 
   imagen1.style.maxWidth = "300px";
@@ -393,14 +411,14 @@ function mostrarSimulacion(simulacion) {
 
   imagen1.style.height = "auto";
   imagen2.style.height = "auto";
-  imagenCardBody.appendChild(imagen1);
-  imagenCardBody.appendChild(imagen2);
+
+  containerImg1CardBody.appendChild(imagen1);
+  containerImg2CardBody.appendChild(imagen2);
 
   imagenCard.appendChild(cardHeaderImagenes);
   imagenCard.appendChild(imagenCardBody);
 
   imagenContainer2.appendChild(imagenCard);
-
   lienzo.appendChild(imagenContainer2);
 }
 function zona_ocupacional(simulacion) {
